@@ -6,10 +6,13 @@ import java.util.Scanner;
  * https://contest.yandex.ru/contest/28730/problems/D/
  */
 public class DSchool {
+    private static int n;
+    private static int[] data;
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int n = sc.nextInt();
-        int[] data = new int[n];
+        n = sc.nextInt();
+        data = new int[n];
         long curSum = 0L;
         long minSum = 0L;
         int minPoint;
@@ -36,6 +39,15 @@ public class DSchool {
         }
 
         System.out.println(minPoint);
+    }
+
+    private static int correctSolution() {
+        return data[n/2];
+        //это простое и корректное решение
+        //суть в том что для нечетного числа домов - школа всегда будет в серединном доме
+        //для четного - в любой точке промежутка между двух серединных домов
+        //Почему? разобьем на пары. для всех точек вне внутреннего отрезка сумма будет одинаково, а для внутреннего отрезка -
+        //минимальная сумма будет в любой точке внутри или на границе
     }
 
 }
