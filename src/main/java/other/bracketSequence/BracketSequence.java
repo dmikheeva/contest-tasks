@@ -1,8 +1,6 @@
 package other.bracketSequence;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * input string containing (),[], <> or other symbols
@@ -16,41 +14,38 @@ public class BracketSequence {
         }
         if (text.isEmpty()) return 1;
         List<Character> brackets = new ArrayList<>();
+        Map<Character, Character> map = new HashMap<Character, Character>() {{
+            put(')', '(');
+            put(']', '[');
+            put('}', '{');
+        }};
         int i = 0;
         int n = text.length();
         char c;
         while (i < n) {
             c = text.charAt(i);
-            switch (c) {
-                case '[':
-                case '(':
-                case '{':
-                    brackets.add(c);
+            if (map.containsValue(c)) {
+                brackets.add(c);
+                i++;
+            } else if (map.containsKey(c)) {
+                if (brackets.isEmpty()) return 0;
+                char prev = brackets.get(brackets.size() - 1);
+                if (prev == map.get(c)) {
+                    brackets.remove(brackets.size() - 1);
                     i++;
-                    break;
-                case ']':
-                case ')':
-                case '}':
-                    if (brackets.isEmpty()) return 0;
-                    char prev = brackets.get(brackets.size() - 1);
-                    if (prev == '[' && c == ']' ||
-                            prev == '{' && c == '}' ||
-                            prev == '(' && c == ')') {
-                        brackets.remove(brackets.size() - 1);
-                        i++;
-                    } else {
-                        return 0;
-                    }
-                    break;
-                default:
-                    i++;
-                    break;
+                } else {
+                    return 0;
+                }
+            } else {
+                i++;
             }
+
         }
         return brackets.isEmpty() ? 1 : 0;
     }
 
     public static void main(String[] args) {
+        System.out.println(Math.max("".indexOf("o"), "".indexOf("n")));
         String[] strs = {
                 "---(+++++)-----",
                 "",
